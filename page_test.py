@@ -1,0 +1,19 @@
+import os
+import page
+import unittest
+import tempfile
+
+class PageTestCase(unittest.TestCase):
+
+	def setUp(self):
+		self.db_fd, page.app.config['DATABASE'] = tempfile.mkstemp()
+		page.app.config['TESTING'] = True
+		self.app = page.app.test_client()
+		page.init_db()
+
+	def tearDown(self):
+		os.close(self.db_fd)
+		os.unlink(page.app.config['DATABASE'])		
+
+if __name__ == '__main__':
+	unittest.main()
