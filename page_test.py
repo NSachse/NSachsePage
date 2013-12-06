@@ -15,5 +15,9 @@ class PageTestCase(unittest.TestCase):
 		os.close(self.db_fd)
 		os.unlink(page.app.config['DATABASE'])		
 
+	def test_empty_db(self):
+		rv = self.app.get(/)
+		assert 'No entries here' in rv.data
+		
 if __name__ == '__main__':
 	unittest.main()
